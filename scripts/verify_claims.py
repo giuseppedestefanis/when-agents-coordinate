@@ -241,6 +241,20 @@ check('runs that opened the hidden grading suite',
       _mr[_mr.source.str.contains('verifier', na=False)].run_id.nunique(), 234)
 check('runs that read the reference solution',
       _mr[_mr.source.str.contains('/tasks/', na=False) & _mr.source.str.endswith('solution.py')].run_id.nunique(), 77)
+
+# Dilution comparison (containment section): saving by exposure group.
+_n8f1 = r1[r1.agent_count==8]
+_outw = _mr[~_mr.source.str.contains('/workspace/', na=False)]
+_aff_ids = set(_outw.run_id) & set(_n8f1.run_id)
+def _sav(sub):
+    return round(100*(1 - sub[sub.artefact_policy=='mandatory'].total_output_tokens.mean()
+                        / sub[sub.artefact_policy=='allowed'].total_output_tokens.mean()))
+_clean8 = _n8f1[~_n8f1.run_id.isin(_aff_ids)]; _aff8 = _n8f1[_n8f1.run_id.isin(_aff_ids)].copy()
+check('dilution: saving with no out-of-workspace read', _sav(_clean8), 46)
+check('dilution: saving across affected runs', _sav(_aff8), 41)
+_k = _outw.groupby('run_id').size(); _aff8['k'] = _aff8.run_id.map(_k)
+_hi = _aff8[_aff8.k > _aff8.k.quantile(2/3)]
+check('dilution: saving in the most-affected third', _sav(_hi), 37)
 dmm = ha.groupby('agent_count').n_agent_to_agent_directed.mean()
 check('directed messages 8 -> 16 agents', f"{dmm[8]:.1f} -> {dmm[16]:.1f}", "34.6 -> 12.2")
 bc = e8[(e8.edge_type=='agent_to_agent') & (e8.target_kind=='broadcast')].groupby('run_id').size()
