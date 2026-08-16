@@ -8,6 +8,11 @@ numbers and every data figure in the paper.
 This package is **CSV-only**: the per-experiment `ledger.json` files have been
 removed. Nothing needed to check the paper depends on them.
 
+## Authors
+
+- **Giuseppe Destefanis** — Department of Computer Science, University College London, UK — g.destefanis@ucl.ac.uk (corresponding author)
+- **Tomaso Aste** — Department of Computer Science, University College London, UK
+
 **Terminology.** The paper calls the two task families **Experiment 1
 (distributed)** and **Experiment 2 (chained)**. In this package the dataset
 directories and run-ids keep the historical labels `family-1` and `family-2`
