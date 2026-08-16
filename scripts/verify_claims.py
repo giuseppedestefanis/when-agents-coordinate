@@ -225,6 +225,22 @@ _b1, _e1 = _seg_z(_s1); _b2, _e2 = _seg_z(_s2)
 check('16-step slope 8->16 95% CI', f"[{_b2-1.96*_e2:.2f}, {_b2+1.96*_e2:.2f}]", "[-0.34, 0.34]")
 _sed = (_e1**2 + _e2**2) ** 0.5
 check('16-step Delta 95% CI', f"[{(_b1-_b2)-1.96*_sed:.2f}, {(_b1-_b2)+1.96*_sed:.2f}]", "[0.61, 1.55]")
+
+# Main-collection read classification (the containment section's 234 and 77).
+# Rule, recovered and stated: a run counts for the grading suite if any
+# file-tool read touched a path containing 'verifier'; for the reference
+# solution if any read touched a path under /tasks/ ending in solution.py.
+# Both counts are over the eight main-collection datasets (1,902 runs).
+_main_reads = []
+for _ds in ['family-1-full','family-2-full','family-1-pilot','family-2-pilot',
+            'family-1-ablation','family-1-spec-check','compute-invoices-scaling','h8-16agent']:
+    _e = pd.read_csv(D(_ds, 'edges.csv'), usecols=['run_id','edge_type','source'])
+    _main_reads.append(_e[_e.edge_type=='file_to_agent'])
+_mr = pd.concat(_main_reads)
+check('runs that opened the hidden grading suite',
+      _mr[_mr.source.str.contains('verifier', na=False)].run_id.nunique(), 234)
+check('runs that read the reference solution',
+      _mr[_mr.source.str.contains('/tasks/', na=False) & _mr.source.str.endswith('solution.py')].run_id.nunique(), 77)
 dmm = ha.groupby('agent_count').n_agent_to_agent_directed.mean()
 check('directed messages 8 -> 16 agents', f"{dmm[8]:.1f} -> {dmm[16]:.1f}", "34.6 -> 12.2")
 bc = e8[(e8.edge_type=='agent_to_agent') & (e8.target_kind=='broadcast')].groupby('run_id').size()
@@ -322,14 +338,15 @@ m2v = n8b[n8b.artefact_policy=='mandatory'].total_output_tokens.mean()
 check('F2 total output RISES ~10% at 8 agents', round(100*(m2v/a2-1)), 10, tol=1)
 # OUTPUT-token change (the reported figure is output tokens; input is tiny).
 def out_tok(df, n, pol):
+    # Output tokens only: the paper states these changes in output tokens.
     d = df[(df.agent_count==n)&(df.artefact_policy==pol)]
-    return (d.total_input_tokens + d.total_output_tokens).mean()
+    return d.total_output_tokens.mean()
 for lab, df in [('F1 distributed', r1), ('F2 chained', r2)]:
     for n in (4, 8):
         a_t, m_t = out_tok(df, n, 'allowed'), out_tok(df, n, 'mandatory')
         pct = round(100*(m_t/a_t - 1))
         exp = {('F1 distributed',4):-25, ('F1 distributed',8):-42,
-               ('F2 chained',4):16, ('F2 chained',8):10}[(lab,n)]
+               ('F2 chained',4):17, ('F2 chained',8):10}[(lab,n)]
         check(f'{lab} output-token change at n={n}', pct, exp, tol=1)
 # Cached context dominates throughput and is NOT in the run totals; the saving
 # holds on cached tokens too (turns.csv carries cache_read_tokens).

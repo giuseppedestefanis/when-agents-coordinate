@@ -39,13 +39,13 @@ python3 -m venv .venv
 .venv/bin/python scripts/verify_claims.py
 ```
 
-Recomputes **107** quantitative claims from `data/` and prints each next to
+Recomputes **109** quantitative claims from `data/` and prints each next to
 the value the paper states: run counts, the table cells, the scaling
 exponents with their confidence intervals, the task-shaped topology (degree and
 clustering), the files output-token savings and cached-token volume, the main
 percentages and test statistics, the disparity-filter backbone, the exploratory
 cross-experiment H3 interaction, the seam-rounding audit, and the exploratory
-regression. Expect `RESULT: 107/107 checks passed`. It covers the load-bearing numbers; a few values described in the paper are not among the automated checks.
+regression. Expect `RESULT: 109/109 checks passed`. It covers the load-bearing numbers; a few values described in the paper are not among the automated checks.
 
 ```
 .venv/bin/python scripts/verify_method_statistics.py
