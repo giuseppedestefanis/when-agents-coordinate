@@ -8,10 +8,16 @@ in `scripts/`.
 
 | file | what it registers | committed |
 |---|---|---|
-| `experiment-2-analysis-plan.md` | H1, H4, H5, H6 (and H3, qualified below) | 2026-05-30, before any Experiment 2 (chained) full-schedule run |
+| `experiment-2-analysis-plan.md` | H1, H4, H5, H6 (and H3, qualified below) | 2026-05-29, before any Experiment 2 (chained) full-schedule run (see correction below) |
 | `scaling-arm-8step-H7.md` | H7 | before the 8-step (`compute_invoices`) arm ran |
 | `scaling-arm-16step-H8.md` | H8 | before the 16-step (`process_billing`) arm ran |
 | `experiment-1-analysis-plan.md` | the top-up decision only (no hypothesis) | 2026-05-23, before the Experiment 1 full schedule's first 10-rep pass |
+
+**Correction (2026-08-16).** The plan header says "Written 2026-05-30"; the
+committing commit is timestamped 2026-05-29 12:18 UTC and the first
+full-schedule run began 15:48 UTC that day, so the ordering holds and the
+header date is a one-day labelling error. No cell of the pre-registered H1
+test (`peer/allowed/clean`) ran before the commit.
 
 **H2 is not fully pre-registered.** The Experiment 1 plan pre-registers only the top-up decision. H2's predicted direction was fixed from the
 Experiment 1 pilot, but its Fisher test and its correction set were specified
