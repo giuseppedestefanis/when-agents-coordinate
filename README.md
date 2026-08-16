@@ -10,8 +10,8 @@ removed. Nothing needed to check the paper depends on them.
 
 ## Authors
 
-- **Giuseppe Destefanis** — Department of Computer Science, University College London, UK — g.destefanis@ucl.ac.uk (corresponding author)
-- **Tomaso Aste** — Department of Computer Science, University College London, UK
+- **Giuseppe Destefanis** — Department of Computer Science, University College London, UK — g.destefanis@ucl.ac.uk
+- **Tomaso Aste** — Department of Computer Science, University College London, UK — t.aste@ucl.ac.uk
 
 **Terminology.** The paper calls the two task families **Experiment 1
 (distributed)** and **Experiment 2 (chained)**. In this package the dataset
