@@ -152,4 +152,4 @@ graph = nx.from_pandas_edgelist(
     create_using=nx.MultiDiGraph)
 ```
 
-`networkx` is not a dependency of this repository, only an option for the downstream analysis. The CSV files load equally well into Gephi, igraph or R.
+The analysis scripts use `networkx` (pinned in `requirements.txt`); the CSV files also load directly into Gephi, igraph or R.

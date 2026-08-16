@@ -10,6 +10,10 @@ This directory holds the runnable artefacts for the Family 1 pilot task
 instances: the verifier test suites and a reference solution for each distinct
 task.
 
+References to `memory/...` paths point to the research repository's
+design record, outside this package; nothing in them is needed to run the
+tasks.
+
 The design source of truth for each instance, including the integrated
 specification, the component split, the agent-to-component assignment, the
 prompt templates and the expected graph signature, is the corresponding
