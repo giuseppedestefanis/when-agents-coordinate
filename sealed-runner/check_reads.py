@@ -18,6 +18,11 @@ Usage::
     python3 check_reads.py \\
       --experiment-root ../improvement_20_july/test-output/canary \\
       --control-root   ../improvement_20_july/test-output/canary/_control
+Portability: the path classification is specific to the collection machine
+(the control tree lived under /private/tmp/claude-501/...); on another machine
+adjust --experiment-root/--control-root and the scratch-root test in
+classify(). The sealed CSVs in data/sealed-replication/ already carry the
+outcome of this classification.
 """
 
 import argparse

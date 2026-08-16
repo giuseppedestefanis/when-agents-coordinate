@@ -213,6 +213,18 @@ b816, l816, h816 = slope_ci(ha[ha.agent_count.isin([8,16])])
 check('16-step slope 8->16', f"{b816:.2f}", "0.00")
 b48h, _, _ = slope_ci(ha[ha.agent_count.isin([4,8])])
 check('16-step break size Delta', round(b48h - b816, 2), 1.08, tol=0.005)
+
+# H8 interval checks: the registered model is per-run OLS within each segment
+# (preregistration/scaling-arm-16step-H8.md); both intervals reported with the
+# +/-1.96 SE normal approximation, the convention the paper labels for H1.
+_s1 = ha[ha.agent_count.isin([4,8])]; _s2 = ha[ha.agent_count.isin([8,16])]
+def _seg_z(d):
+    _x = np.log(d.agent_count.values.astype(float)); _y = np.log(d.n_agent_to_agent.values.astype(float))
+    _r = stats.linregress(_x, _y); return _r.slope, _r.stderr
+_b1, _e1 = _seg_z(_s1); _b2, _e2 = _seg_z(_s2)
+check('16-step slope 8->16 95% CI', f"[{_b2-1.96*_e2:.2f}, {_b2+1.96*_e2:.2f}]", "[-0.34, 0.34]")
+_sed = (_e1**2 + _e2**2) ** 0.5
+check('16-step Delta 95% CI', f"[{(_b1-_b2)-1.96*_sed:.2f}, {(_b1-_b2)+1.96*_sed:.2f}]", "[0.61, 1.55]")
 dmm = ha.groupby('agent_count').n_agent_to_agent_directed.mean()
 check('directed messages 8 -> 16 agents', f"{dmm[8]:.1f} -> {dmm[16]:.1f}", "34.6 -> 12.2")
 bc = e8[(e8.edge_type=='agent_to_agent') & (e8.target_kind=='broadcast')].groupby('run_id').size()
@@ -222,6 +234,9 @@ b8  = bc.reindex(ha8.index).fillna(0).mean(); b16 = bc.reindex(ha16.index).filln
 check('broadcasts 8 -> 16 agents', f"{b8:.1f} -> {b16:.1f}", "12.3 -> 34.0")
 check('16-agent runs coordinating by broadcast alone', int((ha16.n_agent_to_agent_directed==0).sum()), 12)
 
+# INSPECTION ONLY (not asserted): this tau90 normalises over the named-message
+# window; the committed estimator (analyse_handshake_timing.py) normalises over
+# the full message window, so these values differ from Figure 5's caption range.
 def tau90(edf, rdf, instance, topo, n):
     runs = rdf[(rdf.instance==instance)&(rdf.artefact_policy=='allowed')&(rdf.topology==topo)&(rdf.agent_count==n)].run_id
     out = []

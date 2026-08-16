@@ -39,13 +39,13 @@ python3 -m venv .venv
 .venv/bin/python scripts/verify_claims.py
 ```
 
-Recomputes **105** quantitative claims from `data/` and prints each next to
+Recomputes **107** quantitative claims from `data/` and prints each next to
 the value the paper states: run counts, the table cells, the scaling
 exponents with their confidence intervals, the task-shaped topology (degree and
 clustering), the files output-token savings and cached-token volume, the main
 percentages and test statistics, the disparity-filter backbone, the exploratory
 cross-experiment H3 interaction, the seam-rounding audit, and the exploratory
-regression. Expect `RESULT: 105/105 checks passed`. It covers the load-bearing numbers; a few values described in the paper are not among the automated checks.
+regression. Expect `RESULT: 107/107 checks passed`. It covers the load-bearing numbers; a few values described in the paper are not among the automated checks.
 
 ```
 .venv/bin/python scripts/verify_method_statistics.py
@@ -103,7 +103,7 @@ and the read-classification script are in `sealed-runner/`.
 | To check | Run |
 |---|---|
 | the load-bearing numbers in the text, tables and captions | `scripts/verify_claims.py` |
-| H6, the disparity-filter backbone, centralisation | `scripts/verify_method_statistics.py` |
+| H6, the disparity-filter backbone, centralisation (supporting analysis) | `scripts/verify_method_statistics.py` |
 | the network-structure statistics behind Finding 3 | `scripts/analyse_network_structure.py` |
 | the sealed replication (containment section) | `scripts/analyse_sealed_replication.py` |
 | any figure | `scripts/figures/<figure-name>.py` |

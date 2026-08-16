@@ -118,8 +118,9 @@ def centralisation_contrast(e1: pd.DataFrame, r1: pd.DataFrame) -> None:
     uf, pf = stats.mannwhitneyu(flat, orch)
     report("SAME CONTRAST with both flat collections pooled",
            f"{flat.median():.3f} vs {orch.median():.3f}, p={pf:.3f}",
-           "The paper words this contrast as 'the flat ones'. Pooled, the "
-           "difference disappears; the published figure is collection B only.")
+           "Retained as supporting analysis; the manuscript no longer reports "
+           "this contrast. Pooled, the difference disappears; the earlier "
+           "figure was collection B only.")
 
     lo, hi = orch.min(), orch.max()
     report("orchestrator absolute centralisation, range over runs",
