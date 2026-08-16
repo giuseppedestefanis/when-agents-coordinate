@@ -1,7 +1,7 @@
 # Replication package — "When Agents Coordinate: Measuring Coordination in Multi-Agent AI Coding"
 
 Everything behind the paper: the released dataset (1,902 graded runs, each
-recorded as a temporal graph with agents and files as nodes), the
+recorded as a temporal network with agents and files as nodes), the
 infrastructure that created it, and the scripts that reproduce the load-bearing
 numbers and every data figure in the paper.
 
