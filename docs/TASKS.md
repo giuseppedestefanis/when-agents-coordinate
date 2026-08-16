@@ -26,12 +26,10 @@ instance-2/   build_report, eight components
   verifier.py   test suite (31 tests)
   solution.py   reference implementation
 instance-3/   process_orders, overlapping distribution (reuses instance-1)
-  README.md
 instance-4/   process_orders without sorting, dependent components
   verifier.py   test suite (20 tests)
   solution.py   reference implementation
 instance-5/   process_orders, mild conflict (reuses instance-1)
-  README.md
 ```
 
 Instances 3 and 5 reuse the Instance 1 task without change; they vary only the
@@ -136,13 +134,11 @@ instance-2/   compute_invoices (eight-step chain)
                      resolve_product, compute_line_totals, apply_discount,
                      compute_tax, format_invoices, pipeline
 instance-3/   summarise_transactions, overlapping distribution (reuses instance-1)
-  README.md
 instance-4/   summarise_transactions_v2 (non-local CATEGORY_ORDER dependency)
   verifier.py        test suite (24 tests)
   solution/          reference pipeline: parse, validate, aggregate,
                      format_output, pipeline
 instance-5/   summarise_transactions, mild conflict (reuses instance-1)
-  README.md
 ```
 
 Instances 3 and 5 reuse the Instance 1 task without change; they vary only
