@@ -1,0 +1,4 @@
+run_id,family,task_id,pattern,agent_count,topology,artefact_policy,replication,status,success,tests_passed,tests_failed,tests_errors,wall_time_s,error,run_dir,updated_at
+family-1-process_orders-clean-a4-peer-forbidden-r01,family-1,process_orders,clean,4,peer,forbidden,1,ok,True,22,0,0,232.228,,<repo>/data/family-1-ablation/runs/family-1-process_orders-clean-a4-peer-forbidden-r01,2026-05-23T06:30:58.705722+00:00
+family-1-process_orders-clean-a4-peer-forbidden-r02,family-1,process_orders,clean,4,peer,forbidden,2,ok,True,22,0,0,100.468,,<repo>/data/family-1-ablation/runs/family-1-process_orders-clean-a4-peer-forbidden-r02,2026-05-23T06:32:39.511235+00:00
+family-1-process_orders-clean-a4-peer-forbidden-r03,family-1,process_orders,clean,4,peer,forbidden,3,ok,True,22,0,0,267.817,,<repo>/data/family-1-ablation/runs/family-1-process_orders-clean-a4-peer-forbidden-r03,2026-05-23T06:37:07.691404+00:00

@@ -1,0 +1,4 @@
+run_id,family,instance,agent_count,topology,artefact_policy,success,completion_time_s,total_input_tokens,total_output_tokens,n_nodes,n_edges,n_agent_nodes,n_file_nodes,n_agent_to_agent,n_agent_to_file,n_file_to_agent
+family-1-process_orders-clean-a4-peer-forbidden-r01,family-1,process_orders/clean,4,peer,forbidden,True,228.123,174,52284,5,23,4,1,6,8,9
+family-1-process_orders-clean-a4-peer-forbidden-r02,family-1,process_orders/clean,4,peer,forbidden,True,95.531,69,37926,5,18,4,1,0,9,9
+family-1-process_orders-clean-a4-peer-forbidden-r03,family-1,process_orders/clean,4,peer,forbidden,True,264.46,246,123287,6,59,5,1,39,10,10

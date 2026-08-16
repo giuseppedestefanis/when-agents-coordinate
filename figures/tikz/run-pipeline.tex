@@ -1,0 +1,55 @@
+% The experimental run pipeline. Two columns: the run-time main flow on
+% the left, the instrumentation and parsing on the right. Master CSVs
+% (cross-run aggregation) and the resumable ledger are described in the
+% caption and the surrounding prose, not drawn here, to keep the figure
+% free of crossing arrows.
+\begin{tikzpicture}[
+  font=\footnotesize,
+  node distance = 4mm and 6mm,
+  box/.style    = {rectangle, draw=black!75, rounded corners=1pt,
+                   minimum width=26mm, minimum height=8mm, align=center,
+                   inner sep=2pt, fill=blue!4},
+  store/.style  = {rectangle, draw=black!75, rounded corners=1pt,
+                   minimum width=26mm, minimum height=8mm, align=center,
+                   inner sep=2pt, fill=orange!8, font=\footnotesize\ttfamily},
+  side/.style   = {rectangle, draw=black!75, rounded corners=1pt,
+                   minimum width=26mm, minimum height=8mm, align=center,
+                   inner sep=2pt, fill=gray!8},
+  flow/.style   = {-{Stealth[length=2mm]}, semithick, draw=black!85},
+  twoflow/.style= {{Stealth[length=2mm]}-{Stealth[length=2mm]}, semithick,
+                   draw=black!85}
+]
+
+  % Left column: run-time main pipeline, top to bottom.
+  \node[box]   (lib)    {Task library};
+  \node[box]   (gen)    [below=of lib]    {Task generator\\\scriptsize(one configuration)};
+  \node[box]   (setup)  [below=of gen]    {Run setup\\\scriptsize(workspace, prompts)};
+  \node[box]   (agents) [below=of setup]  {$N$ agent processes\\\scriptsize(parallel)};
+  \node[box]   (verif)  [below=of agents] {Verifier on workspace};
+  \node[store] (out)    [below=of verif]  {result.json};
+
+  % Right column: instrumentation and parsing, top to bottom. Anchored as a
+  % single vertical stack off the MCP node (itself aligned to the agents row),
+  % so the column shares one x-position and the arrows stay vertical. Box
+  % heights and row spacing match the left column, so the rows still align.
+  \node[side]  (mcp)    [right=of agents] {MCP server\\\scriptsize(message log)};
+  \node[store] (logs)   [below=of mcp]    {session +\\message logs};
+  \node[box]   (parse)  [below=of logs]   {Parser};
+  \node[store] (csvs)   [below=of parse]  {per-run CSVs:\\\scriptsize nodes, edges, turns, runs};
+
+  % Main pipeline arrows (pure vertical, left column).
+  \draw[flow] (lib)    -- (gen);
+  \draw[flow] (gen)    -- (setup);
+  \draw[flow] (setup)  -- (agents);
+  \draw[flow] (agents) -- (verif);
+  \draw[flow] (verif)  -- (out);
+
+  % Agents <-> MCP server (pure horizontal).
+  \draw[twoflow] (agents) -- (mcp);
+
+  % Instrumentation pipeline (pure vertical, right column).
+  \draw[flow] (mcp)    -- (logs);
+  \draw[flow] (logs)   -- (parse);
+  \draw[flow] (parse)  -- (csvs);
+
+\end{tikzpicture}

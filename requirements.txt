@@ -1,0 +1,14 @@
+# Pinned dependencies for the "When Agents Coordinate" replication package.
+# Install into a virtual environment:
+#   python3 -m venv .venv
+#   .venv/bin/pip install -r requirements.txt
+mcp==1.27.1
+pytest==9.0.3
+# Analysis dependencies (the analyse_*.py scripts).
+scipy==1.17.1
+numpy==2.4.6
+pandas==3.0.3
+networkx==3.6.1
+statsmodels==0.14.6
+# Figure rendering (scripts/figures/).
+matplotlib==3.10.9

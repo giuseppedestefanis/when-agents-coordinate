@@ -1,0 +1,118 @@
+% The dataset at a glance, drawn rather than written:
+%   top    - pictograms of the two task shapes;
+%   middle - the configuration space as a stacked grid, one cell magnified
+%            into what a cell contains (10 runs -> 10 graded graphs);
+%   bottom - the run totals.
+\begin{tikzpicture}[
+  font=\footnotesize,
+  agent/.style = {circle, draw=black!75, fill=blue!10, minimum size=5.5mm,
+                  inner sep=0pt, font=\scriptsize},
+  piece/.style = {rectangle, draw=black!70, minimum width=11.5mm, minimum height=6.5mm,
+                  inner sep=1pt, font=\tiny},
+  stepbox/.style = {rectangle, draw=black!70, rounded corners=1pt, fill=orange!10,
+                  minimum width=13.5mm, minimum height=6mm, inner sep=1pt,
+                  font=\tiny\ttfamily},
+  own/.style   = {rectangle, draw=black!50, dashed, rounded corners=3pt, inner sep=2.5pt},
+  deal/.style  = {-{Stealth[length=1.8mm]}, semithick, draw=black!70},
+  chain/.style = {-{Stealth[length=1.8mm]}, semithick, draw=black!85},
+  zoom/.style  = {draw=black!35, thin},
+  note/.style  = {font=\scriptsize, text=black!70, align=center}
+]
+
+% ======================= TOP: the two task shapes =========================
+\node[font=\footnotesize\bfseries] at (-3.8,0.55) {Experiment 1: distributed knowledge};
+\node[note] at (-3.8,0.08) {\texttt{process\_orders}, one function, spec cut into four parts};
+
+% the spec, cut into four pieces
+\node[piece, fill=red!14]    (p1) at (-5.6,-0.75) {signature};
+\node[piece, fill=blue!14]   (p2) at (-4.4,-0.75) {validation};
+\node[piece, fill=green!16]  (p3) at (-3.2,-0.75) {discount};
+\node[piece, fill=yellow!25] (p4) at (-2.0,-0.75) {sorting};
+
+% dealt to four agents
+\node[agent] (a1) at (-5.6,-2.0) {$a_1$};
+\node[agent] (a2) at (-4.4,-2.0) {$a_2$};
+\node[agent] (a3) at (-3.2,-2.0) {$a_3$};
+\node[agent] (a4) at (-2.0,-2.0) {$a_4$};
+\draw[deal] (p1) -- (a1);
+\draw[deal] (p2) -- (a2);
+\draw[deal] (p3) -- (a3);
+\draw[deal] (p4) -- (a4);
+\node[note] at (-3.8,-2.85) {each agent sees one part, never the whole:\\the team must reassemble the spec by coordinating};
+
+\node[font=\footnotesize\bfseries] at (3.8,0.55) {Experiment 2: sequential dependency};
+\node[note] at (3.8,0.08) {\texttt{summarise\_transactions}, a four-step chain};
+
+% the chain, owned in consecutive blocks
+\node[stepbox] (s1) at (1.3,-1.5)  {parse};
+\node[stepbox] (s2) at (2.8,-1.5)  {validate};
+\node[stepbox] (s3) at (4.8,-1.5)  {aggregate};
+\node[stepbox] (s4) at (6.3,-1.5)  {format};
+\draw[chain] (s1) -- (s2);
+\draw[chain] (s3) -- (s4);
+
+\node[own, fit=(s1)(s2)] (o1) {};
+\node[own, fit=(s3)(s4)] (o2) {};
+\node[agent] (b1) at (2.05,-0.55) {$a_1$};
+\node[agent] (b2) at (5.55,-0.55) {$a_2$};
+\draw[black!50] (b1) -- (o1.north);
+\draw[black!50] (b2) -- (o2.north);
+% the interface between owners
+\draw[{Stealth[length=1.6mm]}-{Stealth[length=1.6mm]}, draw=red!70!black, semithick]
+  (o1.east) -- (o2.west);
+\node[font=\tiny, text=red!70!black] at (3.8,-2.05) {the interface};
+\node[note] at (3.8,-2.85) {each agent owns consecutive steps, without knowing its position:\\the interface between owners must be agreed};
+
+% ================== MIDDLE: the configuration space =======================
+% three stacked 4x3 grids = team structure; columns = team size; rows = files
+\begin{scope}[shift={(-5.45,-6.55)}]
+  % back layers (team structure)
+  \draw[black!30, fill=gray!4]  (0.56,0.40) rectangle (3.16,2.35);
+  \draw[black!45, fill=gray!2]  (0.28,0.20) rectangle (2.88,2.15);
+  % front layer with grid
+  \draw[black!70, fill=white] (0,0) rectangle (2.6,1.95);
+  \foreach \x in {0.65,1.3,1.95} \draw[black!40] (\x,0) -- (\x,1.95);
+  \foreach \y in {0.65,1.3}      \draw[black!40] (0,\y) -- (2.6,\y);
+  % one highlighted cell: n=8, allowed
+  \fill[green!30] (1.95,0.65) rectangle (2.6,1.3);
+  \draw[black!70] (1.95,0.65) rectangle (2.6,1.3);
+  % axis: team size (columns)
+  \foreach \x/\l in {0.325/1, 0.975/2, 1.625/4, 2.275/8}
+    \node[font=\scriptsize] at (\x,-0.25) {\l};
+  \node[font=\scriptsize\bfseries] at (1.3,-0.62) {team size};
+  % axis: shared files (rows)
+  \node[font=\scriptsize, anchor=east] at (-0.08,0.325) {forbidden};
+  \node[font=\scriptsize, anchor=east] at (-0.08,0.975) {allowed};
+  \node[font=\scriptsize, anchor=east] at (-0.08,1.625) {mandatory};
+  \node[font=\scriptsize\bfseries, rotate=90] at (-1.95,0.975) {shared files};
+  % axis: team structure (depth)
+  \draw[-{Stealth[length=1.8mm]}, black!60] (2.7,2.05) -- (3.3,2.5);
+  \node[font=\scriptsize, anchor=west, align=left] at (2.62,2.78)
+    {\textbf{team structure}: flat (collected twice, as collection A and B) or \emph{coordinator}};
+  % Experiment-1 extra axis + degeneracy note
+  \node[font=\scriptsize, text=black!70, align=left, anchor=west] at (-1.5,-1.3)
+    {Each experiment repeats this whole grid for each \textbf{spec split} (clean, overlapping, conflicting);\\
+     combinations that make no sense are dropped (e.g.\ mandatory files at one agent).};
+\end{scope}
+
+% the magnifier: what one cell is
+\draw[zoom] (-2.85,-5.25) -- (1.0,-4.7);
+\draw[zoom] (-2.85,-5.90) -- (1.0,-6.5);
+\node[rectangle, draw=black!70, rounded corners=2pt, fill=green!6, inner sep=5pt,
+      align=left, anchor=west] (cellbox) at (1.0,-5.6)
+  {\textbf{one cell} $=$ one configuration, run \textbf{10 times}\\[2pt]
+   \tikz{\foreach \i in {1,...,10} \node[circle, draw=black!60, fill=blue!12,
+         inner sep=1.6pt] at (0.34*\i,0) {};}\\[2pt]
+   every run $\rightarrow$ pass/fail from the test suite\\
+   \phantom{every run} $+$ one temporal network};
+
+% ======================== BOTTOM: the totals ==============================
+\node[rectangle, draw=black!85, thick, rounded corners=2pt, fill=green!6,
+      inner sep=5pt, align=center] at (0,-9.35)
+  {Experiment 1: $85$ cells $\rightarrow 850$ runs \quad
+   Experiment 2: $87$ cells $\rightarrow 870$ runs \quad
+   scaling arms: $30 + 70$ runs (to $n{=}16$) \quad
+   pilots, checks: $82$\\[2pt]
+   $\Rightarrow$ \textbf{1{,}902 graded runs released}, model pinned to \texttt{claude-sonnet-4-6}};
+
+\end{tikzpicture}

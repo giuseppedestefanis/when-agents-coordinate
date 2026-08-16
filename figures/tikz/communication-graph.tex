@@ -1,0 +1,51 @@
+% The principal methodology figure. One small run drawn as the measured
+% object: agents and files are both nodes, every logged event is a typed
+% edge, and the circled numbers give the order in time, so the "temporal"
+% part of the graph is visible. spec.md is written once and read twice,
+% quietly making the one-to-many point that Finding 2 develops.
+% Layout is crossing-free by construction.
+\begin{tikzpicture}[
+  agent/.style = {circle, draw=black!75, fill=blue!8,
+                  minimum size=8.5mm, font=\small, inner sep=0pt},
+  file/.style  = {rectangle, draw=black!75, fill=orange!14,
+                  rounded corners=2pt, minimum width=17mm, minimum height=7.5mm,
+                  font=\small\ttfamily, inner sep=3pt},
+  msg/.style   = {-{Stealth[length=2.4mm]}, thick, draw=black!85},
+  write/.style = {-{Stealth[length=2.4mm]}, thick, draw=blue!65!black, dashed},
+  read/.style  = {-{Stealth[length=2.4mm]}, thick, draw=orange!80!black,
+                  dash pattern=on 0.6pt off 2.2pt, line cap=round},
+  ev/.style    = {circle, solid, draw=black!60, fill=white, inner sep=0.6pt,
+                  font=\tiny, minimum size=3.4mm}
+]
+  % ---- nodes -------------------------------------------------------------
+  \node[agent] (a1) at (0,2.4)   {$a_1$};
+  \node[agent] (a2) at (2.6,2.4) {$a_2$};
+  \node[agent] (a3) at (0,0)     {$a_3$};
+  \node[agent] (a4) at (2.6,0)   {$a_4$};
+
+  \node[file] (spec) at (6.0,2.4) {spec.md};
+  \node[file] (sol)  at (6.0,0)   {solution.py};
+
+  % ---- messages (black, solid) --------------------------------------------
+  \draw[msg] (a1) -- (a2) node[ev, midway] {1};
+  \draw[msg] (a1) -- (a3) node[ev, midway] {2};
+  \draw[msg] ([yshift=2.5pt]a3.east) -- ([yshift=2.5pt]a4.west) node[ev, midway, above=0.5pt] {6};
+  \draw[msg] ([yshift=-2.5pt]a4.west) -- ([yshift=-2.5pt]a3.east) node[ev, midway, below=0.5pt] {7};
+
+  % ---- file writes (blue, dashed) ------------------------------------------
+  \draw[write] (a2) -- (spec) node[ev, midway] {3};
+  \draw[write] (a4) -- (sol)  node[ev, midway] {8};
+
+  % ---- file reads (orange, dotted) -----------------------------------------
+  \draw[read] (spec.south west) -- (a3.north east) node[ev, pos=0.45] {4};
+  \draw[read] (spec.south) to[bend left=12] node[ev, pos=0.5] {5} (a4.north east);
+
+  % ---- legend ---------------------------------------------------------------
+  \begin{scope}[shift={(-0.4,-1.45)}, font=\footnotesize]
+    \draw[msg]   (0,0) -- (0.85,0);      \node[anchor=west] at (0.9,0)  {message};
+    \draw[write] (2.65,0) -- (3.5,0);    \node[anchor=west] at (3.55,0) {file write};
+    \draw[read]  (5.35,0) -- (6.2,0);    \node[anchor=west] at (6.25,0) {file read};
+    \node[ev] at (7.95,0) {1};
+    \node[anchor=west] at (8.15,0) {order in time};
+  \end{scope}
+\end{tikzpicture}
