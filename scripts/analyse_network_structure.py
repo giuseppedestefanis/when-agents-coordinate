@@ -3,17 +3,14 @@
 
 Motivation
 ----------
-`verify_claims.py` checks every headline number in the paper except a handful
-of method-specific statistics, which it flags in a NOTE line and defers to the
-repository's analysis reports. The most load-bearing of those is the degree
-centralisation contrast quoted in Finding 3:
-
-    "at eight agents, median degree centralisation 0.14 against 0.24,
-     p = 0.018"    (orchestrator against flat)
-
-That number matters because it is the structural evidence that naming a
-coordinator creates no hub. This script recomputes it from the released CSVs
-alone, prints the result, and writes a tidy per-run table to
+The degree-centralisation contrast (at eight agents, median 0.14 against
+0.24, p = 0.018, orchestrator against flat) is retained as a supporting
+analysis: the manuscript does not report it, and the paper's no-hub evidence
+is the disparity-filter backbone (asserted in verify_claims.py).
+verify_method_statistics.py reproduces the contrast exactly as a
+collection-B-only comparison. This script recomputes centralisation from the
+released CSVs alone, prints several definitional variants side by side for
+transparency, and writes a tidy per-run table to
 `data/derived/network-structure.csv`. It writes nothing outside the package.
 
 Definition
@@ -24,9 +21,8 @@ point-to-point message graph: edges whose `target_kind` is `canonical` or
 dropped. It is 0 for a perfectly flat graph and 1 for a star, and is defined
 only for runs with at least three messaging agents.
 
-Because the paper's exact figure could not be reproduced from the package, the
-script reports several definitional variants side by side rather than asserting
-one. See the NOTE printed at the end.
+See the NOTE printed at the end for how the variants relate to the
+collection-B-only reproduction in verify_method_statistics.py.
 
 Run:  python3 scripts/analyse_network_structure.py
 Needs: pandas, networkx, scipy
@@ -117,17 +113,15 @@ def main() -> int:
     runs[cols].to_csv(out_path, index=False)
     print(f"\nwrote {os.path.relpath(out_path, ROOT)}")
 
-    print("\nNOTE on reproducibility")
-    print("  The paper reports, at eight agents, median degree centralisation")
-    print(f"  {TARGET[0]} (orchestrator) against {TARGET[1]} (flat), p = {TARGET[2]}.")
-    print("  None of the variants above reproduces that p-value from the")
-    print("  released CSVs. The closest medians come from the canonical-only")
-    print("  variant, whose contrast is not significant. The direction the")
-    print("  paper claims does hold under every variant: the orchestrator")
-    print("  graphs are no more centralised than the flat ones, so no hub")
-    print("  forms when an agent is named coordinator. The exact statistic")
-    print("  should be reconciled against the original analysis before the")
-    print("  paper is submitted.")
+    print("\nNOTE")
+    print("  This centralisation statistic is a supporting analysis; the")
+    print("  manuscript does not report it. verify_method_statistics.py")
+    print(f"  reproduces {TARGET[0]} against {TARGET[1]}, p = {TARGET[2]}, as a")
+    print("  collection-B-only comparison; pooled across both flat")
+    print("  collections the difference disappears. Every variant above")
+    print("  agrees in direction: the orchestrator graphs are no more")
+    print("  centralised than the flat ones, so no hub forms when an agent")
+    print("  is named coordinator.")
     return 0
 
 

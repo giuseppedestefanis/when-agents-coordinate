@@ -93,7 +93,7 @@ nothing real is returned. The batch is 244 runs, released under
 
 Reprints, from the sealed CSVs alone: the model was pinned throughout and no
 read reached a real grading file; the teams still reached for the hidden test
-file in 80% of runs, another agent's prompt in 67%, and the manifest in 61%;
+file in 80% of runs, another agent's prompt in 66%, and the manifest in 61%;
 naming a coordinator makes no difference under any file policy (all null); and
 mandating shared files collapses one-to-one messaging. The seal implementation
 and the read-classification script are in `sealed-runner/`.
