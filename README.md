@@ -139,7 +139,7 @@ data/
   (each experiment: master/ with nodes, edges, turns and runs CSVs)
 ```
 
-## What the data does and does not contain
+## What the data contains
 
 The four CSV tables per experiment record the **structure** of every run: who
 messaged whom, which files were written and read, when, at what byte size and
