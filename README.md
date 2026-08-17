@@ -165,3 +165,9 @@ interaction has its own committed script (`scripts/analyse_h3_interaction.py`).
 
 All runs were collected with Claude Code (2.1.x), model pinned to
 `claude-sonnet-4-6` and recorded on every turn.
+
+## Licence
+
+Everything in this package (code, data, documentation) is released under the
+Creative Commons Attribution 4.0 International licence (CC BY 4.0); the full
+text is in `LICENSE`. Attribution should cite the paper and this repository.
