@@ -109,7 +109,7 @@ agents reach into, `<home>` and `<tmp>` the model runtime's own stores.
 
 `scripts/analyse_sealed_replication.py` reprints the sealed results from these
 CSVs: how often the teams reached for each decoy (80% for the hidden test file,
-67% for another agent's prompt, 61% for the manifest), the leadership contrast
+66% for another agent's prompt, 61% for the manifest), the leadership contrast
 under each policy (all null), and the file-policy message substitution. The
 seal implementation and the read-classification script are in `sealed-runner/`.
 
