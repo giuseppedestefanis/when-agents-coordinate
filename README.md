@@ -13,6 +13,23 @@ removed. Nothing needed to check the paper depends on them.
 - **Giuseppe Destefanis** — Department of Computer Science, University College London, UK — g.destefanis@ucl.ac.uk
 - **Tomaso Aste** — Department of Computer Science, University College London, UK — t.aste@ucl.ac.uk
 
+## Citation
+
+The paper is published at [arXiv:2608.16801](https://arxiv.org/abs/2608.16801).
+If you use this package, cite it:
+
+```bibtex
+@misc{destefanis2026whenagents,
+  title         = {When Agents Coordinate: Measuring Coordination in Multi-Agent AI Coding},
+  author        = {Destefanis, Giuseppe and Aste, Tomaso},
+  year          = {2026},
+  eprint        = {2608.16801},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2608.16801},
+}
+```
+
 **Terminology.** The paper calls the two task families **Experiment 1
 (distributed)** and **Experiment 2 (chained)**. In this package the dataset
 directories and run-ids keep the historical labels `family-1` and `family-2`
